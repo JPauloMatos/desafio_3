@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+
+  rabbit:
+    image: "rabbitmq:3-management"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - fullcycle_net
+
+  fullcycle-a:
+    image: jpmatostheras/microsservico_a
+    ports:
+      - 9090:9090
+    networks:
+      - fullcycle_net
+    
+  fullcycle-b:
+    image: jpmatostheras/microsservico_b
+    ports: 
+      - 9091:9091
+    networks:
+      - fullcycle_net
+  
+  fullcycle-c:
+    image: jpmatostheras/microsservico_c
+    ports:
+      - 9092:9092
+    networks:
+      - fullcycle_net
+
+networks:
+   fullcycle_net:
+      driver: bridge
